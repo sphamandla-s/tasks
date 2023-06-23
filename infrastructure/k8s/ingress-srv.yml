@@ -1,0 +1,33 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-srv
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/use-regex: "true"
+spec:
+  rules:
+    - host: task.com
+      http:
+        paths:
+          - path: /task
+            pathType: Prefix
+            backend:
+              service:
+                name: tasks-clusterip-srv
+                port:
+                  number: 3010
+          - path: /task/create
+            pathType: Prefix
+            backend:
+              service:
+                name: tasks-clusterip-srv
+                port:
+                  number: 3010
+          - path: /tasks/([a-zA-Z0-9]+)/comments
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: comments-clusterip-srv
+                port:
+                  number: 3011

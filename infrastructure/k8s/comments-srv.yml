@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: comments-clusterip-srv
+spec:
+  selector:
+    app: comments
+  ports:
+    - name: comments
+      port: 3011
+      targetPort: 3001
